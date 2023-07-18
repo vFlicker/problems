@@ -110,48 +110,102 @@ class LinkedList {
 
     this.length--;
   }
+
+  /**
+   * Реалізовує розворот однозв'язного списку.
+   * 
+   * Цей метод буде працювати повільніше ніж `_reverse2`,
+   * через те, що ми кожен раз оновлюємо наш head.
+   */
+  _reverse1() {
+    if (this.head === null) {
+      // Порожній список, немає що розгортати
+      return;
+    }
+
+    const currentNode = this.head;
+  
+    // Поки currentNode не стане останнім елементом, продовжуємо
+    while (currentNode.next !== null) {
+      // Запам'ятовуємо новий хед
+      // (це наступний елемент після currentNode)
+      const newHead = currentNode.next;
+
+      // Змінюємо елемент на котрий вказує currentNode
+      currentNode.next = currentNode.next.next;
+  
+      // Тепер новий хед вказує на хед
+      newHead.next = this.head;
+  
+      // Змінюємо хед
+      this.head = newHead;
+    }
+  }
+
+  /**
+   * Реалізовує розворот однозв'язного списку.
+   */
+  _reverse2() {
+    // Ініціалізуємо змінну prevNode як null. Вона буде
+    // використовуватись для створення нового розвернутого
+    // списку, який буде поступово доповнюватись нодами.
+    let prevNode = null;
+
+    // Ініціалізуємо змінну currentNode з початку списку
+    // (head).
+    let currentNode = this.head;
+
+    // Продовжуємо цикл, доки не дійдемо до кінця списку.
+    while (currentNode !== null) {
+      // Зберігаємо посилання на наступний елемент старого
+      // списку.
+      const nextNode = currentNode.next;
+
+      // Перевстановлюємо вказівник на наступний елемент,
+      // щоб поточна нода вказувала на попередню ноду,
+      // змінюючи напрямок списку.
+      // Це додає поточну ноду до нового списку.
+      currentNode.next = prevNode;
+
+      // Новий список буде посилатися нашу поточну ноду
+      prevNode = currentNode;
+
+      // Старий список вказує на наступний елемент
+      currentNode = nextNode;
+    }
+
+    this.head = prevNode;
+  }
 }
 
 const linkedList = new LinkedList();
 
-console.log({length: linkedList.length});
-console.log({isEmpty: linkedList.isEmpty});
+const data = Array.from({ length: 10000 }, (_, index) => `${index + 1}`);
 
+// for (const item of data) {
+//   linkedList.append(item);
+// }
+
+linkedList.append('1');
 linkedList.append('2');
+linkedList.append('3');
 linkedList.append('4');
 linkedList.append('5');
 
-linkedList.prepend('1');
-
-linkedList.insert(2, '3');
-
-console.log(linkedList.search('3'));
-
-linkedList.remove(0);
-
+// benchmark('reverse', () =>linkedList._reverse());
+linkedList._reverse2();
 console.dir(linkedList, {depth: null});
 
-console.log({isEmpty: linkedList.isEmpty});
-console.log({length: linkedList.length});
+function benchmark(name, callback) {
+  const start = performance.now();
 
-let count = 0;
-const bubbleSort = (array) => {
-  for (let i = 0; i < array.length - 1; i++) {
-      for (let j = 0; j < array.length - 1 - i; j++) {
-  console.log(array);
+  callback();
 
-        count++
-          // Якщо поточний більше наступного, змінюємо їх місцями
-          if (array[j] > array[j + 1]) {
-              [array[j], array[j + 1]] = [array[j + 1], array[j]];
-          }
-      }
-  }
+  const end = performance.now();
 
-  return array;
-};
+  const time = (end - start) / 1000;
 
-const array = [2, 1, 3, 5, 4];
-console.log(bubbleSort(array));
-console.log(count);
+  console.log(`${name} took ${time.toFixed(5)} seconds`);
+}
+
 
