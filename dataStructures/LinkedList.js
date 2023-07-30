@@ -29,7 +29,7 @@ class LinkedList {
   /**
    * Перевіряє, чи є список порожнім.
    *
-   * @returns {boolean} {@code true} якщо список порожній, {@code false} - інакше
+   * @returns {boolean} {@code true} якщо список порожній, {@code false} — інакше
    */
   get isEmpty() {
     return this._head === null;
@@ -213,7 +213,7 @@ class LinkedList {
    * Перевіряє, чи існує певний елемент у списку.
    * 
    * @param element шуканий елемент
-   * @returns {boolean} {@code true} якщо елемент існує, {@code false} - інакше
+   * @returns {boolean} {@code true} якщо елемент існує, {@code false} — інакше
    */
   contains(element) {
     let currentNode = this._head;
@@ -370,7 +370,7 @@ class LinkedList {
    * Складність за часом — `O(n)`.
    * Складність за пам'яттю — `O(n)`.
    *
-   * @returns {boolean} {@code true} якщо цикл існує, {@code false} - інакше
+   * @returns {boolean} {@code true} якщо цикл існує, {@code false} — інакше
    */
    isCircular1() {
     const nodes = new Set();
@@ -396,7 +396,7 @@ class LinkedList {
    * Складність за часом — `O(n)`.
    * Складність за пам'яттю — `O(1)`.
    * 
-   * @returns {boolean} {@code true} якщо цикл існує, {@code false} - інакше
+   * @returns {boolean} {@code true} якщо цикл існує, {@code false} — інакше
    */
   isCircular2() {
     let tortoise = this._head;
