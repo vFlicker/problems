@@ -98,3 +98,5 @@ console.log(topThree(data));
 //   { login: 'SaiyanBroadway', leaguePoints: 1432 },
 //   { login: 'BoostScooby', leaguePoints: 1476 }
 // ]
+
+export {};

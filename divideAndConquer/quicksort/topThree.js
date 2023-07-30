@@ -201,3 +201,5 @@ console.log(topThree(data));
 //   { login: 'SaiyanBroadway', leaguePoints: 1432 },
 //   { login: 'Mountaintrid', leaguePoints: 1130 }
 // ]
+
+export {};

@@ -171,3 +171,5 @@ const data = [
 
 console.log(searchScore(data, 4)); // { league: 1, placement: 4 }
 console.log(searchScore(data, 14)); // null
+
+export {};

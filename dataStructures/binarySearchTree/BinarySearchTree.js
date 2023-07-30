@@ -42,13 +42,13 @@ class BinarySearchTree {
    * @returns {boolean} {@code true} якщо елемент ще не існує в дереві і був успішно вставлений, {@code false} — інакше
    */
   insert(element) {
-    if (this._root === null) {
-      this._root = new BinarySearchTreeNode(element);
+    const isInserted = this.#insertElement(element);
+
+    if (isInserted) {
       this._size += 1;
-      return true;
-    } else {
-      this.#insert(this._root, element);
     }
+
+    return isInserted;
   }
 
   /**
@@ -150,7 +150,7 @@ class BinarySearchTree {
    * @returns максимальна кількість переходів
    */
   depth() {
-    return this._root === null ? 0 : this.#depth(this._root) - 1;
+    return this._root !== null ? this.#depth(this._root) - 1 : 0;
   }
 
   /**
@@ -187,28 +187,49 @@ class BinarySearchTree {
    * @returns значення елемента якщо елемент існує в дереві і був успішно видалений, {@code null} — інакше
    */
   remove(element) {
-    return this.#remove(this._root, element) ?? null;
+    const removedElement = this.#remove(this._root, element);
+
+    if (removedElement !== null) {
+      this._size -= 1;
+    }
+
+    return removedElement;
   }
 
-  #insert(currentNode, element) {
-    if (currentNode.value > element) {
-      if (currentNode.left === null) {
-        currentNode.left = new BinarySearchTreeNode(element);
-        this._size += 1;
-        return true;
-      } else {
-        return this.#insert(currentNode.left, element);
-      }
-    } else if (currentNode.value < element) {
-      if (currentNode.right === null) {
-        currentNode.right = new BinarySearchTreeNode(element);
-        this._size += 1;
-        return true;
-      } else {
-        return this.#insert(currentNode.right, element);
-      }
+  #insertElement(element) {
+    if (this._root === null) {
+      this._root = new BinarySearchTreeNode(element);
+      return true;
+    } else {
+      return this.#insertIntoSubTree(this._root, element);
+    }
+  }
+
+  #insertIntoSubTree(subTreeRoot, element) {
+    if (subTreeRoot.value > element) {
+      return this.#insertIntoLeftSubtree(subTreeRoot, element);
+    } else if (subTreeRoot.value < element) {
+      return this.#insertIntoRightSubtree(subTreeRoot, element);
     } else {
       return false;
+    }
+  }
+
+  #insertIntoLeftSubtree(currentNode, element) {
+    if (currentNode.left === null) {
+      currentNode.left = new BinarySearchTreeNode(element);
+      return true;
+    } else {
+      return this.#insertIntoSubTree(currentNode.left, element);
+    }
+  }
+
+  #insertIntoRightSubtree(currentNode, element) {
+    if (currentNode.right === null) {
+      currentNode.right = new BinarySearchTreeNode(element);
+      return true;
+    } else {
+      return this.#insertIntoSubTree(currentNode.right, element);
     }
   }
 
@@ -298,37 +319,51 @@ class BinarySearchTree {
     } else if (currentNode.value < element) {
       return this.#remove(currentNode.right, element, currentNode);
     } else if (currentNode.value === element) {
-      if (currentNode.left === null && currentNode.right === null) {
-        if (parentNode === null) {
-          this._root = null;
-        } else if (parentNode.left === currentNode) {
-          parentNode.left = null;
-        } else if (parentNode.right === currentNode) {
-          parentNode.right = null;
-        }
-      } else if (currentNode.left === null || currentNode.right === null) {
-        const childNode = currentNode.left || currentNode.right;
+      return this.#removeNode(currentNode, element, parentNode);
+    }
+  }
 
-        if (parentNode.left === currentNode) {
-          parentNode.left = childNode;
-        } else if (parentNode.right === currentNode) {
-          parentNode.right = childNode;
-        }
-      } else if (currentNode.left !== null && currentNode.right !== null) {
-        const minRightNode = this.#findMinNode(currentNode.right);
+  #removeNode(currentNode, element, parentNode) {
+    if (currentNode.left === null && currentNode.right === null) {
+      this.#removeLeafNode(currentNode, parentNode);
+    } else if (currentNode.left === null || currentNode.right === null) {
+      this.#removeNodeWithOneChild(currentNode, parentNode);
+    } else if (currentNode.left !== null && currentNode.right !== null) {
+      this.#removeNodeWithTwoChildren(currentNode, element);
+    }
 
-        if (minRightNode.left === null) {
-          // Якщо вузол minRightNode не має лівого піддерева, видалити його безпосередньо
-          currentNode.value = minRightNode.value;
-          currentNode.right = currentNode.right.right;
-        } else {
-          currentNode.value = minRightNode.value;
-          currentNode.right = this.#remove(currentNode.right, element, currentNode);
-        }
-      }
+    return element;
+  }
 
-      this._size -= 1;
-      return element;
+  #removeLeafNode(currentNode, parentNode) {
+    if (parentNode === null) {
+      this._root = null;
+    } else if (parentNode.left === currentNode) {
+      parentNode.left = null;
+    } else if (parentNode.right === currentNode) {
+      parentNode.right = null;
+    }
+  }
+
+  #removeNodeWithOneChild(currentNode, parentNode) {
+    const childNode = currentNode.left || currentNode.right;
+
+    if (parentNode.left === currentNode) {
+      parentNode.left = childNode;
+    } else if (parentNode.right === currentNode) {
+      parentNode.right = childNode;
+    }
+  }
+
+  #removeNodeWithTwoChildren(currentNode, element) {
+    const minRightNode = this.#findMinNode(currentNode.right);
+
+    if (minRightNode.left === null) {
+      currentNode.value = minRightNode.value;
+      currentNode.right = currentNode.right.right;
+    } else {
+      currentNode.value = minRightNode.value;
+      currentNode.right = this.#remove(currentNode.right, element, currentNode);
     }
   }
 

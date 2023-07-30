@@ -221,3 +221,4 @@ console.log(searchScore(data, 14)); // null
   ]
 */
 
+export {};

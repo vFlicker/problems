@@ -1,0 +1,8 @@
+{
+  "name": "problems",
+  "version": "1.0.0",
+  "description": "This repository is designed to store CodeWars solutions, algorithms, and more",
+  "author": "Vladyslav Sliusar",
+  "license": "ISC",
+  "type": "module"
+}
