@@ -7,7 +7,7 @@
  * Складність за часом — `О(n * log(n))`
  * Складність за пам'яттю — `О(n)`
  */
- const countPersonal = (input) => {
+const countPersonal = (input) => {
   const entries = [];
   let max = 0;
   let count = 0;
@@ -40,5 +40,5 @@
   return max;
 }
 
-console.log(countPersonalGood([])) // 0
-console.log(countPersonalGood([[1, 2], [1, 10], [4, 9], [5, 6], [8, 16], [8, 15]])) // 4
+console.log(countPersonal([])) // 0
+console.log(countPersonal([[1, 2], [1, 10], [4, 9], [5, 6], [8, 16], [8, 15]])) // 4
