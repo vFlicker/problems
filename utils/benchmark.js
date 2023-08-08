@@ -1,4 +1,4 @@
-function benchmark(name, callback) {
+export const benchmark = (name, callback) => {
   const start = performance.now();
 
   callback();
@@ -8,4 +8,4 @@ function benchmark(name, callback) {
   const time = (end - start) / 1000;
 
   console.log(`${name} took ${time.toFixed(5)} seconds`);
-}
+};
