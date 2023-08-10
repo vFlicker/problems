@@ -154,6 +154,34 @@ class BinarySearchTree {
   }
 
   /**
+   * Повертає максимальну суму шляху в дереві починаючи з `_root`.
+   *
+   * Складність за часом — `O(V)`, де `V` — кількість нод
+   * Складність за пам'яттю — `O(V)`, де `V` — кількість нод
+   *
+   * @returns максимальна кількість переходів
+   */
+  getMaxPathSumFromRoot() {
+    return this.#getMaxPathSumFromRoot(this._root);
+  }
+
+  /**
+   * Повертає максимальну суму шляху в дереві.
+   *
+   * Складність за часом — `O(V)`, де `V` — кількість нод
+   * Складність за пам'яттю — `O(V)`, де `V` — кількість нод
+   *
+   * @returns максимальна кількість переходів
+   */
+  getMaxPathSum() {
+    const max = { value: 0 };
+
+    this.#getMaxPathSum(this._root, max);
+
+    return max.value;
+  }
+
+  /**
    * Обходить дерево, спочатку відвідуючи поточний вузол, а потім рекурсивно відвідуючи його ліве та праве піддерева.
    *
    * @param consumer приймає посилання на вузол під час обходу
@@ -286,6 +314,30 @@ class BinarySearchTree {
       return 1 + Math.max(leftNodeDepth, rightNodeDepth);
     }
   };
+
+  #getMaxPathSumFromRoot(currentNode) {
+    if (currentNode === null) {
+      return 0;
+    } else {
+      const maxLeftPath = this.#getMaxPathSumFromRoot(currentNode.left);
+      const maxRightPath = this.#getMaxPathSumFromRoot(currentNode.right);
+  
+      return currentNode.value + Math.max(maxLeftPath, maxRightPath);
+    }
+  }
+
+  #getMaxPathSum(currentNode, max) {
+    if (currentNode === null) {
+      return 0;
+    } else {
+      const maxLeftPath = Math.max(this.#getMaxPathSum(currentNode.left, max), 0);
+      const maxRightPath = Math.max(this.#getMaxPathSum(currentNode.right, max), 0);
+
+      max.value = Math.max(max.value, maxLeftPath + maxRightPath + currentNode.value);
+
+      return currentNode.value + Math.max(maxLeftPath, maxRightPath);
+    }
+  }
 
   #preOrderTraversal(currentNode, consumer) {
     if (currentNode !== null) {

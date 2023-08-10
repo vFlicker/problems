@@ -21,59 +21,35 @@
   ]
 */
 
-import { random } from "../../utils/index.js";
+import { random } from '../../utils/index.js';
+import { Queue } from './Queue.js'
 
-const getWinner1 = (players) => {
-  const playersCopy = [...players];
-  const eliminated = [];
-  let index = 0;
-
-  while (playersCopy.length !== 1) {
-    // Вибираємо випадковий крок для видалення гравця.
-    const step = random(1, 3);
-
-    // Обчислюємо початковий індекс для видалення, враховуючи циклічність списку.
-    const start = (index + step) % playersCopy.length;
-
-    // Видаляємо гравця з обчисленого індексу і зберігаємо його ім'я.
-    const login = playersCopy.splice(start, 1)[0];
-
-    // Додаємо об'єкт із ім'ям гравця та кількістю позицій до масиву результатів.
-    eliminated.push({ login, step });
-
-    index = start; // Оновлюємо індекс для наступної ітерації.
-  }
-
-  return eliminated;
-};
-
-const getWinner2 = (players) => {
-  const playersQueue = [...players];
-  const eliminated = [];
+const getWinner = (players) => {
+  const eliminated = new Queue();
 
   // Цикл буде працювати поки не знайдемо переможця
-  while (playersQueue.length !== 1) {
+  while (players.size !== 1) {
     const step = random(1, 3); // Вибираємо випадковий крок для видалення гравця.
 
     // Цикл буде працювати поки не дійшли до людини, що вилітає
     for (let i = 0; i < step; i++) {
-      const firstPlayer = playersQueue.shift(); // Беремо гравця, першого в черзі на видалення
-      playersQueue.push(firstPlayer); // і кладемо його в кінець тих, хто чекає видалення
+      const firstPlayer = players.dequeue(); // Беремо гравця, першого в черзі на видалення
+      players.enqueue(firstPlayer); // і кладемо його в кінець тих, хто чекає видалення
     }
 
     // Як тільки дійшли до видаленого — видаляємо його з черги і кладемо в наш масив результатів гри
-    const eliminatedLogin = playersQueue.shift();
+    const eliminatedLogin = players.dequeue();
 
-    eliminated.push({
+    eliminated.enqueue({
       login: eliminatedLogin,
       step,
     });
   }
 
-  return eliminated;
+  return eliminated.elements;
 };
 
-console.log(getWinner2([
+const data = Queue.of(
   'GottaSaiyan',
   'Mountaintrid',
   'Rectionom',
@@ -82,4 +58,6 @@ console.log(getWinner2([
   'BlondiePlanet',
   'Breakingbing',
   'Goldenelox',
-]));
+);
+
+console.log(getWinner(data));

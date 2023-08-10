@@ -1,35 +1,43 @@
 /*
-  Провалідувати, що це дужки коректно розставлені.
+  Провалідувати, що дужки коректно розставлені.
 */
 
+import { Stack } from './Stack.js'
+
 /**
- * За часом — `О(n)`
- * За пам'яттю — `О(n)`
+ * Складність за часом — `O(n)`
+ * Складність за пам'яттю — `O(n)`
  */
- const validateParenthesis = (_string) => {
-  const string = _string.trim();
+const validateParenthesis = (data) => {
+  const string = data.trim();
 
   const bracket = {
     '(': ')',
     '{': '}',
     '[': ']',
-  }
+  };
 
   const openBrackets = new Set(Object.keys(bracket));
   const closeBrackets = new Set(Object.values(bracket));
 
-  const stack = [];
+  const stack = new Stack();
 
   for (const character of string) {
     if (openBrackets.has(character)) {
-      stack.push(character)
+      stack.push(character);
     };
 
     if (closeBrackets.has(character)) {
       const open = stack.pop();
-      if (bracket[open] !== character) return false;
+
+      if (bracket[open] !== character) {
+        return false;
+      };
     }
   }
 
-  return stack.length === 0;
+  return stack.isEmpty;
 };
+
+console.log(validateParenthesis('[([{}{}])]')); // true
+console.log(validateParenthesis('([)]')); // false

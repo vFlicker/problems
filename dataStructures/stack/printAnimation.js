@@ -10,8 +10,14 @@
   ]
 */
 
+import { Stack } from './Stack.js'
+
+/**
+ * Складність за часом — `O(n)`
+ * Складність за пам'яттю — `O(n)`
+ */
 const printAnimation = (string) => {
-  const stack = [];
+  const stack = new Stack();
   const animation = [];
 
   for (const character of string) {
@@ -21,7 +27,7 @@ const printAnimation = (string) => {
       stack.push(character);
     }
 
-    animation.push(stack.join(''));
+    animation.push(stack.elements.join(''));
   }
 
   return animation;

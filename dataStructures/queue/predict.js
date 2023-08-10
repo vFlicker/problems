@@ -4,7 +4,8 @@
   скільки йому доведеться прочекати.
 */
 
-import { benchmark, random } from "../../utils/index.js";
+import { benchmark, random } from '../../utils/index.js';
+import { Queue } from './Queue.js'
 
 /**
  * На швидкодію функції впливає те, скільки годин може
@@ -19,14 +20,15 @@ import { benchmark, random } from "../../utils/index.js";
 const predict1 = (queue, slots) => {
   let time = 0;
 
-  while (queue.length >= slots) {
+  while (queue.size >= slots) {
     time += 1;
 
     for (let i = 0; i < slots; i++) {
-      queue[i] -= 1;
+      queue.elements[i] -= 1;
     }
 
-    queue = queue.filter((item) => item !== 0);
+    const filtered = queue.elements.filter((item) => item !== 0);
+    queue = Queue.of(...filtered);
   }
 
   return time;
@@ -41,19 +43,19 @@ const predict1 = (queue, slots) => {
 const predict2 = (queue, slots) => {
   const computers = new Array(slots).fill(0);
 
-  while (queue.length !== 0) {
-    const time = queue.shift();
+  while (!queue.isEmpty) {
+    const userTime = queue.dequeue();
 
     const minTime = Math.min(...computers);
     const indexForMinTime = computers.indexOf(minTime);
 
-    computers[indexForMinTime] += time;
+    computers[indexForMinTime] += userTime;
   }
 
   return Math.min(...computers);
 };
 
-const data = Array.from({ length: 20_000 }, () => random(1, 10));
+const data = Queue.of(...Array.from({ length: 20_000 }, () => random(1, 10)));
 const count = 100;
 
 benchmark('predict1', () => predict1(data, count));
