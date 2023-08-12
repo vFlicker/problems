@@ -6,8 +6,8 @@
 */
 
 /**
- * За часом — `О(log(n)`
- * За пам'яттю — `О(1)`
+ * Складність за часом — `О(log(n)`
+ * Складність за пам'яттю — `О(1)`
  */
  const searchLeagueByScore = (leaderBoard, leaguePoints) => {
   let left = 0;

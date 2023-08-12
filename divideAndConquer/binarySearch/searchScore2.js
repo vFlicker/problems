@@ -71,8 +71,8 @@ const searchSubtask = (leaderBoard, leaguePoints, coords) => {
 };
 
 /**
- * За часом — `О(log(n))`
- * За пам'яттю — `О(log(n))`
+ * Складність за часом — `О(log(n)`
+ * Складність за пам'яттю — `О(log(n))`
  */
 const searchScore = (leaderBoard, leaguePoints) => {
   // Якщо матриця порожня, повертаємо null
