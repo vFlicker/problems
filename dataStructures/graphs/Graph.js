@@ -144,7 +144,7 @@ class Graph {
   }
 
   /**
-   * Пошук в глибину з використанням рекурсії. 
+   * Пошук в глибину з використанням рекурсії.
    */
   DFS2(value) {
     const node = this.getNodeByValue(value);
