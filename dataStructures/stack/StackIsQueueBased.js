@@ -2,13 +2,13 @@
   Реалізація стека за допомогою черги.
 */
 
-import { Queue } from './Queue.js';
+import { Queue } from '../queue/Queue.js';
 
-class Stack {
+class StackIsQueueBased {
   #queue = new Queue();
 
   static of(...elements) {
-    const stack = new Stack();
+    const stack = new StackIsQueueBased();
 
     for (const element of elements) {
       stack.push(element);

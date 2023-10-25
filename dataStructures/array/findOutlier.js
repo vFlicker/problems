@@ -37,6 +37,5 @@ const findOutlier2 = (numbers) => {
   return numbers[index];
 };
 
-const array = [2, 4, 7, 8, 10];
-console.log(findOutlier1(array)); // 7
-console.log(findOutlier2(array)); // 7
+const cardinal = [2, 4, 7, 8, 10];
+console.log(findOutlier1(cardinal)); // 7
