@@ -8,9 +8,7 @@ import { Stack } from './Stack.js'
  * Складність за часом — `O(n)`
  * Складність за пам'яттю — `O(n)`
  */
-const validateParenthesis = (data) => {
-  const string = data.trim();
-
+const validateParenthesis = (string) => {
   const bracket = {
     '(': ')',
     '{': '}',

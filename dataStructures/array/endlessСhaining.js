@@ -11,8 +11,9 @@
 */
 
 /**
- * Create new array on each iteration.
- * 
+ * Новий масив створюється на кожний виклик методу
+ * filer або map.
+ *
  * const enhanceApiResponseBad = (apiResponse) => {
  *   const filteredChannels = []
  *   const identificatorChannels = []
@@ -41,8 +42,8 @@
 }
 
 /**
- * Create only one array.
- * 
+ * Створюється тільки один масив.
+ *
  * Складність за часом — `О(n)`
  * Складність за пам'яттю — `О(n)`
  */

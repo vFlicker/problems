@@ -9,15 +9,17 @@
  * Складність за часом — `O(n)`
  * Складність за пам'яттю — `O(n)`
  */
-const findSum = (array, value) => {
+export const findSum = (numbers, value) => {
   const values = new Set();
   // 9 - 3 = 6
-  values.add(value - array[0]); // Set(1) { 6 }
+  values.add(value - numbers[0]); // Set(1) { 6 }
 
-  for (let i = 1; i < array.length; i++) {
-    const currentValue = array[i];
+  for (let i = 1; i < numbers.length; i++) {
+    const currentValue = numbers[i];
     
-    if (values.has(currentValue)) return true;
+    if (values.has(currentValue)) {
+      return true
+    };
 
     // 9 - 5 = 4
     values.add(value - currentValue);
