@@ -6,8 +6,8 @@
 #     return replacedString
 
 
-def disemvowel(string_: str) -> str:
-    return "".join(letter for letter in string_ if letter.lower() not in "aeiou")
+def disemvowel(string: str) -> str:
+    return "".join(letter for letter in string if letter.lower() not in "aeiou")
 
 
 print(disemvowel("This website is for losers LOL!"))  # "Ths wbst s fr lsrs LL!"
