@@ -1,3 +1,3 @@
-# problems
+# Problems
 
-This repository is designed to store CodeWars solutions, algorithms, and more
+This repository contains examples of code for algorithms, data structures, and solutions to CodeWars in various programming languages.
