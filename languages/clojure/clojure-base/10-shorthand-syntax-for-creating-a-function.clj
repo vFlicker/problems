@@ -1,0 +1,1 @@
+(defn sum-of-squares [a b] (+ (* a a) (* b b)))
